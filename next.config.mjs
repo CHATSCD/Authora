@@ -1,11 +1,7 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["mammoth", "pdf-parse", "formidable"],
-  },
-  api: {
-    bodyParser: false,
   },
 };
 
