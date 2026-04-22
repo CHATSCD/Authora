@@ -107,13 +107,17 @@ export default function PreviewPage() {
             </p>
           )}
         </div>
-        <a
-          href={`/api/export/${id}`}
-          className="btn-primary shrink-0 text-center"
-          download
-        >
-          Download EPUB
-        </a>
+        <div className="flex items-center gap-2 flex-wrap">
+          <a href={`/api/export-txt/${id}`} className="btn-secondary text-sm" download>
+            TXT
+          </a>
+          <a href={`/api/export-html/${id}`} className="btn-secondary text-sm" download>
+            HTML
+          </a>
+          <a href={`/api/export/${id}`} className="btn-primary text-sm" download>
+            Download EPUB
+          </a>
+        </div>
       </div>
 
       {/* Tabs */}
