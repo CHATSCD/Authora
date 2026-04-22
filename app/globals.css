@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Georgia, Cambria, serif;
+  }
+
+  body {
+    @apply bg-stone-50 text-stone-900;
+  }
+}
+
+@layer components {
+  .prose-manuscript {
+    @apply max-w-none text-stone-800 leading-relaxed;
+  }
+
+  .prose-manuscript h1 {
+    @apply text-3xl font-bold text-stone-900 mt-10 mb-4 font-serif border-b border-stone-200 pb-3;
+  }
+
+  .prose-manuscript h2 {
+    @apply text-2xl font-semibold text-stone-800 mt-8 mb-3 font-serif;
+  }
+
+  .prose-manuscript h3 {
+    @apply text-xl font-medium text-stone-700 mt-6 mb-2 font-serif;
+  }
+
+  .prose-manuscript p {
+    @apply mb-4 text-base leading-8;
+  }
+
+  .prose-manuscript blockquote {
+    @apply border-l-4 border-bindery-400 pl-4 italic text-stone-600 my-4;
+  }
+
+  .upload-zone {
+    @apply border-2 border-dashed border-stone-300 rounded-2xl p-12 text-center
+           transition-all duration-200 cursor-pointer
+           hover:border-bindery-400 hover:bg-bindery-50;
+  }
+
+  .upload-zone.dragging {
+    @apply border-bindery-500 bg-bindery-50 scale-[1.01];
+  }
+
+  .btn-primary {
+    @apply bg-bindery-600 text-white px-6 py-3 rounded-lg font-medium
+           hover:bg-bindery-700 transition-colors duration-150 disabled:opacity-50
+           disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-stone-700 px-6 py-3 rounded-lg font-medium border border-stone-300
+           hover:bg-stone-50 transition-colors duration-150;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-stone-200 p-6;
+  }
+}
