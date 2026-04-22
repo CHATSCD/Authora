@@ -17,7 +17,7 @@ export async function GET(
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-  return new NextResponse(epubBuffer, {
+  return new NextResponse(new Uint8Array(epubBuffer), {
     status: 200,
     headers: {
       "Content-Type": "application/epub+zip",
