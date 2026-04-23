@@ -46,7 +46,8 @@ const DEFAULT_SIZES: Record<TextType, number> = {
   quote: 22,
 };
 
-const TEMPLATES: { name: string; desc: string; els: Omit<El, "id">[] }[] = [
+type ElDef = Omit<TextEl, "id"> | Omit<ShapeEl, "id">;
+const TEMPLATES: { name: string; desc: string; els: ElDef[] }[] = [
   {
     name: "Book Stats",
     desc: "Chapters, word count, read time",
@@ -104,7 +105,7 @@ const TEMPLATES: { name: string; desc: string; els: Omit<El, "id">[] }[] = [
 
 function uid() { return Math.random().toString(36).slice(2, 9); }
 
-function makeEls(defs: Omit<El, "id">[]): El[] {
+function makeEls(defs: ElDef[]): El[] {
   return defs.map((d) => ({ ...d, id: uid() } as El));
 }
 
