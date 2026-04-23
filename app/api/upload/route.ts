@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 import { processManuscript } from "@/lib/manuscriptProcessor";
 import { manuscriptStore } from "@/lib/store";
 
-// Vercel (and most serverless platforms) only allow writes to /tmp
 const UPLOAD_DIR = "/tmp/authora-uploads";
 const MAX_SIZE = 50 * 1024 * 1024;
 
@@ -42,7 +41,7 @@ export async function POST(req: NextRequest) {
     await writeFile(filePath, Buffer.from(bytes));
 
     const manuscript = await processManuscript(filePath, file.name, id);
-    manuscriptStore.set(id, manuscript);
+    await manuscriptStore.set(id, manuscript);
 
     return NextResponse.json({ id }, { status: 201 });
   } catch (err) {
