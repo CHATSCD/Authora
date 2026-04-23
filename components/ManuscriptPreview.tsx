@@ -87,6 +87,14 @@ export default function ManuscriptPreview({ manuscript, activeChapter }: Props) 
                     {chapter.title}
                   </h2>
                 )}
+                {chapter.subtitle && (
+                  <p
+                    className="text-stone-500 italic mt-1"
+                    style={{ fontSize: `${fontSize * 0.95}px` }}
+                  >
+                    {chapter.subtitle}
+                  </p>
+                )}
                 <div className="flex items-center justify-center gap-2 mt-4">
                   <span className="w-8 h-px bg-stone-300" />
                   <span className="w-1.5 h-1.5 rounded-full bg-bindery-400" />
