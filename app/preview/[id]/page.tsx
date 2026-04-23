@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import ChapterList from "@/components/ChapterList";
 import ManuscriptPreview from "@/components/ManuscriptPreview";
 import PublishChecklist from "@/components/PublishChecklist";
@@ -222,6 +223,49 @@ export default function PreviewPage() {
           <PublishChecklist manuscript={manuscript} />
         </div>
       )}
+
+      {/* Next steps */}
+      <div className="border-t border-stone-200 pt-8">
+        <p className="text-xs font-semibold text-stone-400 uppercase tracking-wide mb-4">
+          Next steps
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link
+            href="/cover"
+            className="card flex items-start gap-4 hover:border-bindery-300 hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 bg-bindery-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-bindery-200 transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-bindery-600">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+            <div>
+              <p className="font-semibold text-stone-900 text-sm">Design Your Cover</p>
+              <p className="text-stone-500 text-xs mt-0.5">
+                Create a professional book cover with genre templates, custom backgrounds, and typography.
+              </p>
+            </div>
+          </Link>
+          <Link
+            href="/infographic"
+            className="card flex items-start gap-4 hover:border-bindery-300 hover:shadow-md transition-all group"
+          >
+            <div className="w-10 h-10 bg-bindery-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-bindery-200 transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-bindery-600">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              </svg>
+            </div>
+            <div>
+              <p className="font-semibold text-stone-900 text-sm">Make an Infographic</p>
+              <p className="text-stone-500 text-xs mt-0.5">
+                Build shareable graphics with your book stats, quotes, and chapter map.
+              </p>
+            </div>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
