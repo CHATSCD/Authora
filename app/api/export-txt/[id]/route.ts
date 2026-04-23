@@ -6,7 +6,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const manuscript = manuscriptStore.get(params.id);
+  const manuscript = await manuscriptStore.get(params.id);
   if (!manuscript) {
     return NextResponse.json({ error: "Manuscript not found" }, { status: 404 });
   }
