@@ -37,8 +37,8 @@ function cleanHtml(html: string): string {
     .replace(/[ \t]{2,}/g, " ")
     // Remove empty paragraphs
     .replace(/<p>\s*<\/p>/gi, "")
-    // Remove MS Word comment/revision artefacts
-    .replace(/<del[^>]*>.*?<\/del>/gis, "")
+    // Remove MS Word comment/revision artefacts (no /s flag for ES2017 compat)
+    .replace(/<del[^>]*>[^<]*<\/del>/gi, "")
     // Unwrap unnecessary spans with no attributes
     .replace(/<span>(.*?)<\/span>/gi, "$1")
     // Trim trailing whitespace inside paragraph tags
