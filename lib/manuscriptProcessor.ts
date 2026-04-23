@@ -28,6 +28,25 @@ export interface ProcessedManuscript {
 const CHAPTER_HEADING_RE =
   /^(?:chapter\s+(?:\d+|[ivxlcdm]+)|part\s+(?:\d+|[ivxlcdm]+)|\d+\.?\s+\w)/i;
 
+function cleanHtml(html: string): string {
+  return html
+    // Normalise smart quotes to straight (readers re-apply their own)
+    .replace(/[‘’]/g, "'")
+    .replace(/[“”]/g, '"')
+    // Collapse multiple spaces inside tags
+    .replace(/[ \t]{2,}/g, " ")
+    // Remove empty paragraphs
+    .replace(/<p>\s*<\/p>/gi, "")
+    // Remove MS Word comment/revision artefacts
+    .replace(/<del[^>]*>.*?<\/del>/gis, "")
+    // Unwrap unnecessary spans with no attributes
+    .replace(/<span>(.*?)<\/span>/gi, "$1")
+    // Trim trailing whitespace inside paragraph tags
+    .replace(/<p>\s+/gi, "<p>")
+    .replace(/\s+<\/p>/gi, "</p>")
+    .trim();
+}
+
 function countWords(text: string): number {
   return text
     .replace(/<[^>]+>/g, " ")
@@ -114,7 +133,7 @@ async function processDocx(filePath: string): Promise<{ html: string; metadata: 
     }
   );
 
-  const html = result.value;
+  const html = cleanHtml(result.value);
   const plainText = htmlToPlainText(html);
   const metadata = extractMetadataFromText(plainText);
 
@@ -167,7 +186,7 @@ async function processPdf(filePath: string): Promise<{ html: string; metadata: P
   if (data.info?.Title) metadata.title = data.info.Title;
   if (data.info?.Author) metadata.author = data.info.Author;
 
-  return { html, metadata };
+  return { html: cleanHtml(html), metadata };
 }
 
 async function processTxt(filePath: string): Promise<{ html: string; metadata: Partial<ManuscriptMetadata> }> {
@@ -195,7 +214,7 @@ async function processTxt(filePath: string): Promise<{ html: string; metadata: P
   }
   if (paragraph) htmlParts.push(`<p>${paragraph}</p>`);
 
-  const html = htmlParts.join("\n");
+  const html = cleanHtml(htmlParts.join("\n"));
   const metadata = extractMetadataFromText(text);
   return { html, metadata };
 }
