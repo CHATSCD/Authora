@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import { processManuscript } from "@/lib/manuscriptProcessor";
 import { manuscriptStore } from "@/lib/store";
 
-const UPLOAD_DIR = path.join(process.cwd(), "tmp", "uploads");
+// Vercel (and most serverless platforms) only allow writes to /tmp
+const UPLOAD_DIR = "/tmp/authora-uploads";
 const MAX_SIZE = 50 * 1024 * 1024;
 
 export async function POST(req: NextRequest) {
@@ -45,9 +46,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ id }, { status: 201 });
   } catch (err) {
-    console.error("[upload]", err);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[upload] error:", message, err);
     return NextResponse.json(
-      { error: "Processing failed. Please try again." },
+      { error: "Processing failed. Please try again.", detail: message },
       { status: 500 }
     );
   }
