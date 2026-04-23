@@ -5,7 +5,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const manuscript = manuscriptStore.get(params.id);
+  const manuscript = await manuscriptStore.get(params.id);
   if (!manuscript) {
     return NextResponse.json({ error: "Manuscript not found" }, { status: 404 });
   }
@@ -16,26 +16,19 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const manuscript = manuscriptStore.get(params.id);
-  if (!manuscript) {
-    return NextResponse.json({ error: "Manuscript not found" }, { status: 404 });
-  }
-
   const body = await req.json();
   const { title, author, description, genre, language } = body;
 
-  const updated = {
-    ...manuscript,
-    metadata: {
-      ...manuscript.metadata,
-      ...(title !== undefined && { title }),
-      ...(author !== undefined && { author }),
-      ...(description !== undefined && { description }),
-      ...(genre !== undefined && { genre }),
-      ...(language !== undefined && { language }),
-    },
-  };
+  const updated = await manuscriptStore.patch(params.id, {
+    ...(title !== undefined && { title }),
+    ...(author !== undefined && { author }),
+    ...(description !== undefined && { description }),
+    ...(genre !== undefined && { genre }),
+    ...(language !== undefined && { language }),
+  });
 
-  manuscriptStore.set(params.id, updated);
+  if (!updated) {
+    return NextResponse.json({ error: "Manuscript not found" }, { status: 404 });
+  }
   return NextResponse.json(updated);
 }
